@@ -1,11 +1,24 @@
 'use client';
 
 import { usePortfolio } from '@/context/PortfolioContext';
-import { cardOrder } from '@/data/colors';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 export function Navbar() {
   const { goToCard, currentIndex } = usePortfolio();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile view
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const navItems = [
     { name: 'Home', index: 0 },
@@ -16,29 +29,66 @@ export function Navbar() {
     { name: 'Contact', index: 5 },
   ];
 
+  const handleNavClick = (index: number) => {
+    goToCard(index);
+    setIsMenuOpen(false);
+  };
+
+  // Mobile menu variants for animation
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      y: -20,
+      transition: {
+        duration: 0.2,
+        when: "afterChildren",
+        staggerChildren: 0.05,
+        staggerDirection: -1
+      }
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+        when: "beforeChildren",
+        staggerChildren: 0.1,
+        staggerDirection: 1
+      }
+    }
+  };
+
+  const itemVariants = {
+    closed: { opacity: 0, x: -20 },
+    open: { opacity: 1, x: 0 }
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-white/80 shadow-sm border-b border-gray-200/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-3 sm:py-4">
           {/* Logo/Brand */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-xl font-bold text-gray-900"
+            className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent cursor-pointer"
+            onClick={() => handleNavClick(0)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             BM
           </motion.div>
 
-          {/* Navigation Links */}
-          <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-1 lg:gap-2">
             {navItems.map((item) => (
               <motion.button
                 key={item.index}
-                onClick={() => goToCard(item.index)}
-                className={`px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                onClick={() => handleNavClick(item.index)}
+                className={`px-3 lg:px-4 py-2 text-sm lg:text-base font-medium rounded-lg transition-all duration-300 whitespace-nowrap ${
                   currentIndex === item.index
-                    ? 'bg-blue-100 text-blue-900 shadow-sm'
+                    ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-900 shadow-sm border border-purple-200'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
                 whileHover={{ scale: 1.05 }}
@@ -48,7 +98,59 @@ export function Navbar() {
               </motion.button>
             ))}
           </div>
+
+          {/* Mobile Menu Button */}
+          <motion.button
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+          </motion.button>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        <AnimatePresence>
+          {isMenuOpen && isMobile && (
+            <motion.div
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={menuVariants}
+              className="md:hidden absolute left-0 right-0 top-[57px] bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-lg rounded-b-2xl overflow-hidden"
+            >
+              <div className="flex flex-col p-3 space-y-1">
+                {navItems.map((item) => (
+                  <motion.button
+                    key={item.index}
+                    variants={itemVariants}
+                    onClick={() => handleNavClick(item.index)}
+                    className={`w-full text-left px-4 py-3 text-base font-medium rounded-xl transition-all duration-300 ${
+                      currentIndex === item.index
+                        ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-900 border-l-4 border-purple-500'
+                        : 'text-gray-700 hover:bg-gray-100 hover:pl-6'
+                    }`}
+                    whileHover={{ scale: 1.02, x: 5 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className={`w-2 h-2 rounded-full ${
+                        currentIndex === item.index ? 'bg-purple-500' : 'bg-gray-300'
+                      }`} />
+                      {item.name}
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+              
+              {/* Decorative elements */}
+              <div className="absolute top-0 right-0 w-20 h-20 bg-purple-200/20 rounded-full blur-2xl" />
+              <div className="absolute bottom-0 left-0 w-20 h-20 bg-blue-200/20 rounded-full blur-2xl" />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
