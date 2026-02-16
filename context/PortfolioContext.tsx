@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useState, useCallback, ReactNode } from 'react';
+import React, { createContext, useState, useCallback, ReactNode, useEffect } from 'react';
 import { cardOrder } from '@/data/colors';
 
 interface PortfolioContextType {
@@ -10,6 +10,8 @@ interface PortfolioContextType {
   prevCard: () => void;
   goToCard: (index: number) => void;
   isRotating: boolean;
+  totalCards: number;
+  isMobile: boolean;
 }
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
@@ -17,32 +19,57 @@ const PortfolioContext = createContext<PortfolioContextType | undefined>(undefin
 export function PortfolioProvider({ children }: { children: ReactNode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isRotating, setIsRotating] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check for mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Animation duration based on device
+  const getAnimationDuration = useCallback(() => {
+    return isMobile ? 400 : 600;
+  }, [isMobile]);
 
   const nextCard = useCallback(() => {
+    if (isRotating) return;
+    
     setIsRotating(true);
     setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % cardOrder.length);
       setIsRotating(false);
-    }, 600);
-  }, []);
+    }, getAnimationDuration());
+  }, [isRotating, getAnimationDuration]);
 
   const prevCard = useCallback(() => {
+    if (isRotating) return;
+    
     setIsRotating(true);
     setTimeout(() => {
       setCurrentIndex((prev) => (prev - 1 + cardOrder.length) % cardOrder.length);
       setIsRotating(false);
-    }, 600);
-  }, []);
+    }, getAnimationDuration());
+  }, [isRotating, getAnimationDuration]);
 
   const goToCard = useCallback((index: number) => {
+    if (isRotating || index === currentIndex) return;
+    
     setIsRotating(true);
     setTimeout(() => {
       setCurrentIndex(index % cardOrder.length);
       setIsRotating(false);
-    }, 600);
-  }, []);
+    }, getAnimationDuration());
+  }, [isRotating, currentIndex, getAnimationDuration]);
 
   const currentCard = cardOrder[currentIndex];
+  const totalCards = cardOrder.length;
 
   return (
     <PortfolioContext.Provider
@@ -53,6 +80,8 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
         prevCard,
         goToCard,
         isRotating,
+        totalCards,
+        isMobile,
       }}
     >
       {children}
