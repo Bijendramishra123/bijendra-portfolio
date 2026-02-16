@@ -211,8 +211,8 @@ export function CardNavigation() {
         </motion.div>
       </div>
 
-      {/* Current Card Label - Mobile Only */}
-      {isMobile && (
+      {/* YEH POORA HATAYA - Current Card Label wala section */}
+      {/* {isMobile && (
         <motion.div 
           className="absolute top-20 left-1/2 transform -translate-x-1/2 
             bg-gradient-to-r from-purple-600 to-blue-600 text-white 
@@ -225,7 +225,7 @@ export function CardNavigation() {
         >
           {cardIcons[currentIndex]?.label}
         </motion.div>
-      )}
+      )} */}
 
       {/* Keyboard Navigation Hint - Desktop Only */}
       {!isMobile && (

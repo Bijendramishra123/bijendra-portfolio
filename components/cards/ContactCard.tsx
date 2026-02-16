@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { resumeData } from '@/data/resume';
 import { useState } from 'react';
-import { FaCheck, FaExclamationCircle } from 'react-icons/fa';
+import { FaCheck, FaExclamationCircle, FaEnvelope, FaPhone } from 'react-icons/fa';
 
 interface FormData {
   name: string;
@@ -33,7 +33,6 @@ export function ContactCard() {
     setIsSubmitting(true);
 
     try {
-      // Using Web3Forms API
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: {
@@ -82,12 +81,18 @@ export function ContactCard() {
   };
 
   return (
-    <div className="h-full space-y-8 overflow-y-auto pr-4">
+    <div className="h-full space-y-6 md:space-y-8 overflow-y-auto px-2 sm:px-4 
+      scrollbar-thin scrollbar-thumb-orange-300 scrollbar-track-orange-50">
+      
+      {/* Header Section */}
       <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">{contact.title}</h2>
-        <p className="text-gray-600">{contact.description}</p>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-800 mb-2">
+          {contact.title}
+        </h2>
+        <p className="text-orange-600/80 text-sm sm:text-base">{contact.description}</p>
       </motion.div>
 
+      {/* Contact Form */}
       <motion.form
         onSubmit={handleSubmit}
         className="space-y-4"
@@ -95,7 +100,7 @@ export function ContactCard() {
         initial="hidden"
         animate="visible"
       >
-        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input
             type="text"
             name="name"
@@ -103,7 +108,9 @@ export function ContactCard() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="px-4 py-3 bg-white/70 border border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300"
+            className="w-full px-4 py-3 bg-white/70 border border-orange-300 rounded-lg 
+              focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300
+              text-sm sm:text-base"
           />
           <input
             type="email"
@@ -112,7 +119,9 @@ export function ContactCard() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="px-4 py-3 bg-white/70 border border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300"
+            className="w-full px-4 py-3 bg-white/70 border border-orange-300 rounded-lg 
+              focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300
+              text-sm sm:text-base"
           />
         </motion.div>
 
@@ -124,7 +133,9 @@ export function ContactCard() {
             value={formData.subject}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-white/70 border border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300"
+            className="w-full px-4 py-3 bg-white/70 border border-orange-300 rounded-lg 
+              focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300
+              text-sm sm:text-base"
           />
         </motion.div>
 
@@ -135,8 +146,10 @@ export function ContactCard() {
             value={formData.message}
             onChange={handleChange}
             required
-            rows={5}
-            className="w-full px-4 py-3 bg-white/70 border border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 resize-none"
+            rows={4}
+            className="w-full px-4 py-3 bg-white/70 border border-orange-300 rounded-lg 
+              focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all duration-300 
+              resize-none text-sm sm:text-base"
           />
         </motion.div>
 
@@ -144,19 +157,23 @@ export function ContactCard() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-orange-600 text-white py-3 rounded-lg font-semibold hover:bg-orange-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-3 
+              rounded-lg font-semibold hover:from-orange-700 hover:to-orange-600 
+              transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed
+              shadow-md hover:shadow-lg text-sm sm:text-base"
           >
             {isSubmitting ? 'Sending...' : 'Send Message'}
           </button>
         </motion.div>
 
+        {/* Status Messages */}
         {submitStatus === 'success' && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 p-4 bg-green-100 text-green-800 rounded-lg"
+            className="flex items-center gap-2 p-4 bg-green-100 text-green-800 rounded-lg text-sm sm:text-base"
           >
-            <FaCheck className="w-5 h-5" />
+            <FaCheck className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
             <span>Message sent successfully! I'll get back to you soon.</span>
           </motion.div>
         )}
@@ -165,31 +182,51 @@ export function ContactCard() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-2 p-4 bg-red-100 text-red-800 rounded-lg"
+            className="flex items-center gap-2 p-4 bg-red-100 text-red-800 rounded-lg text-sm sm:text-base"
           >
-            <FaExclamationCircle className="w-5 h-5" />
+            <FaExclamationCircle className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
             <span>Failed to send message. Please try again.</span>
           </motion.div>
         )}
       </motion.form>
 
+      {/* Contact Info - FIXED VERSION */}
       <motion.div
-        className="grid grid-cols-2 gap-4 pt-4 border-t border-orange-200"
+        className="flex flex-col sm:grid sm:grid-cols-2 gap-4 pt-4 border-t border-orange-200"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
       >
-        <div className="text-center">
-          <p className="text-sm text-gray-600 mb-1">Email</p>
-          <a href={`mailto:${personal.email}`} className="text-orange-600 hover:text-orange-700 font-semibold">
-            {personal.email}
-          </a>
+        {/* Email */}
+        <div className="flex items-center gap-3 p-3 bg-orange-50/50 rounded-lg hover:bg-orange-100/50 transition-colors duration-300">
+          <div className="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+            <FaEnvelope className="w-4 h-4 text-orange-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 mb-1">Email</p>
+            <a 
+              href={`mailto:${personal.email}`} 
+              className="text-orange-600 hover:text-orange-700 font-medium text-sm break-all"
+            >
+              {personal.email}
+            </a>
+          </div>
         </div>
-        <div className="text-center">
-          <p className="text-sm text-gray-600 mb-1">Phone</p>
-          <a href={`tel:${personal.phone}`} className="text-orange-600 hover:text-orange-700 font-semibold">
-            {personal.phone}
-          </a>
+
+        {/* Phone */}
+        <div className="flex items-center gap-3 p-3 bg-orange-50/50 rounded-lg hover:bg-orange-100/50 transition-colors duration-300">
+          <div className="flex-shrink-0 w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+            <FaPhone className="w-4 h-4 text-orange-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-gray-500 mb-1">Phone</p>
+            <a 
+              href={`tel:${personal.phone}`} 
+              className="text-orange-600 hover:text-orange-700 font-medium text-sm"
+            >
+              {personal.phone}
+            </a>
+          </div>
         </div>
       </motion.div>
     </div>

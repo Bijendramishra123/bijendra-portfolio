@@ -6,28 +6,20 @@ import { useState, useEffect } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
 export function Navbar() {
-  const { goToCard, currentIndex } = usePortfolio();
+  const { goToCard, currentIndex, isMobile } = usePortfolio();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if mobile view
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const navItems = [
-    { name: 'Home', index: 0 },
-    { name: 'Skills', index: 1 },
-    { name: 'Projects', index: 2 },
-    { name: 'Experience', index: 3 },
-    { name: 'Certifications', index: 4 },
-    { name: 'Contact', index: 5 },
+    { name: 'Home', index: 0, color: 'from-purple-600 to-pink-600' },
+    { name: 'Skills', index: 1, color: 'from-amber-600 to-orange-600' },
+    { name: 'Projects', index: 2, color: 'from-red-600 to-pink-600' },
+    { name: 'Experience', index: 3, color: 'from-teal-600 to-emerald-600' },
+    { name: 'Certifications', index: 4, color: 'from-sky-600 to-blue-600' },
+    { name: 'Contact', index: 5, color: 'from-indigo-600 to-purple-600' },
   ];
+
+  // Current card name and color based on index
+  const currentCard = navItems[currentIndex] || navItems[0];
 
   const handleNavClick = (index: number) => {
     goToCard(index);
@@ -67,7 +59,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm bg-white/80 shadow-sm border-b border-gray-200/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-3 sm:py-4">
-          {/* Logo/Brand */}
+          {/* Left Section: Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -80,6 +72,20 @@ export function Navbar() {
             BM
           </motion.div>
 
+          {/* Center Section: Current Card Name - Mobile Only */}
+          {isMobile && (
+            <motion.div
+              key={currentCard.name}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`text-base font-medium px-4 py-1.5 rounded-full backdrop-blur-sm
+                bg-gradient-to-r ${currentCard.color} text-white shadow-md`}
+            >
+              {currentCard.name}
+            </motion.div>
+          )}
+
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1 lg:gap-2">
             {navItems.map((item) => (
@@ -88,7 +94,7 @@ export function Navbar() {
                 onClick={() => handleNavClick(item.index)}
                 className={`px-3 lg:px-4 py-2 text-sm lg:text-base font-medium rounded-lg transition-all duration-300 whitespace-nowrap ${
                   currentIndex === item.index
-                    ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-900 shadow-sm border border-purple-200'
+                    ? `bg-gradient-to-r ${item.color} text-white shadow-sm`
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
                 whileHover={{ scale: 1.05 }}
@@ -99,7 +105,7 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Right Section: Mobile Menu Button */}
           <motion.button
             className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -129,7 +135,7 @@ export function Navbar() {
                     onClick={() => handleNavClick(item.index)}
                     className={`w-full text-left px-4 py-3 text-base font-medium rounded-xl transition-all duration-300 ${
                       currentIndex === item.index
-                        ? 'bg-gradient-to-r from-purple-100 to-blue-100 text-purple-900 border-l-4 border-purple-500'
+                        ? `bg-gradient-to-r ${item.color} text-white border-l-4 border-white`
                         : 'text-gray-700 hover:bg-gray-100 hover:pl-6'
                     }`}
                     whileHover={{ scale: 1.02, x: 5 }}
@@ -137,7 +143,7 @@ export function Navbar() {
                   >
                     <span className="flex items-center gap-3">
                       <span className={`w-2 h-2 rounded-full ${
-                        currentIndex === item.index ? 'bg-purple-500' : 'bg-gray-300'
+                        currentIndex === item.index ? 'bg-white' : 'bg-gray-300'
                       }`} />
                       {item.name}
                     </span>

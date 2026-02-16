@@ -24,17 +24,24 @@ const cards = [
   { component: ContactCard, index: 5, name: 'Contact' },
 ];
 
+// Card colors mapping
+const cardColors = [
+  'from-purple-600 to-pink-600', // Home
+  'from-amber-600 to-orange-600', // Skills
+  'from-red-600 to-pink-600', // Projects
+  'from-teal-600 to-emerald-600', // Experience
+  'from-sky-600 to-blue-600', // Certifications
+  'from-indigo-600 to-purple-600', // Contact
+];
+
 export default function Page() {
   const { currentIndex, isRotating, nextCard, prevCard } = usePortfolio();
   const theme = getThemeByIndex(currentIndex);
   
-  // Touch navigation states
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [showSwipeHint, setShowSwipeHint] = useState(true);
 
-  // Check mobile on mount and resize
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -43,14 +50,8 @@ export default function Page() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    // Hide swipe hint after 5 seconds
-    const timer = setTimeout(() => {
-      setShowSwipeHint(false);
-    }, 5000);
-    
     return () => {
       window.removeEventListener('resize', checkMobile);
-      clearTimeout(timer);
     };
   }, []);
 
@@ -104,41 +105,10 @@ export default function Page() {
       <Navbar />
       <Footer />
 
-      {/* Swipe Hint Overlay - Mobile Only */}
-      {isMobile && showSwipeHint && (
-        <motion.div 
-          className="fixed inset-0 z-40 flex items-center justify-center pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <div className="bg-black/60 text-white px-6 py-3 rounded-full text-sm backdrop-blur-sm
-            flex items-center gap-4 shadow-xl">
-            <span className="text-2xl">👈</span>
-            <span>Swipe to navigate</span>
-            <span className="text-2xl">👉</span>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Current Card Indicator - Mobile */}
-      {isMobile && (
-        <motion.div 
-          className="fixed top-20 left-1/2 transform -translate-x-1/2 z-30
-            bg-gradient-to-r from-purple-600 to-blue-600 text-white 
-            px-4 py-1.5 rounded-full text-xs font-medium shadow-lg"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          key={currentIndex}
-        >
-          {cards[currentIndex].name}
-        </motion.div>
-      )}
-
       {/* Main Content Area */}
       <div className="flex-1 pt-16 sm:pt-20 pb-20 sm:pb-24 px-2 sm:px-4 md:px-8 lg:px-16 overflow-hidden">
         <motion.div
-          className="w-full h-full relative"
+          className="w-full h-full"
           animate={{
             opacity: isRotating ? 0.8 : 1,
             scale: isRotating ? 0.98 : 1,
@@ -146,7 +116,7 @@ export default function Page() {
           transition={{ duration: 0.3 }}
         >
           <div
-            className="w-full h-full relative"
+            className="w-full h-full"
             style={{
               perspective: isMobile ? '800px' : '1000px',
               transformStyle: 'preserve-3d',
@@ -171,10 +141,10 @@ export default function Page() {
         </motion.div>
       </div>
 
-      {/* Progress Bar - Shows current position */}
+      {/* Progress Bar with Card Colors */}
       <div className="fixed top-14 left-0 right-0 h-1 bg-gray-200 z-40">
         <motion.div 
-          className="h-full bg-gradient-to-r from-purple-600 to-blue-600"
+          className={`h-full bg-gradient-to-r ${cardColors[currentIndex]}`}
           initial={{ width: '0%' }}
           animate={{ width: `${((currentIndex + 1) / cards.length) * 100}%` }}
           transition={{ duration: 0.3 }}
