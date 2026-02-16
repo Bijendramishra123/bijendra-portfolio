@@ -32,7 +32,6 @@ export default function Page() {
       <Navbar />
       <Footer />
 
-      {/* Main Content Area */}
       <div className="flex-1 pt-20 pb-24 px-4 md:px-8 lg:px-16 overflow-hidden">
         <motion.div
           className="w-full h-full relative"
@@ -41,7 +40,6 @@ export default function Page() {
           }}
           transition={{ duration: 0.3 }}
         >
-          {/* Card Container with 3D rotation effect */}
           <div
             className="w-full h-full relative"
             style={{
@@ -64,7 +62,6 @@ export default function Page() {
         </motion.div>
       </div>
 
-      {/* Navigation Controls */}
       <CardNavigation />
     </main>
   );
