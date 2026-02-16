@@ -131,7 +131,7 @@ export const resumeData = {
         description: 'A modern, interactive portfolio website built with Next.js and Tailwind CSS to showcase projects and skills.',
         technologies: ['Next.js', 'Tailwind CSS', 'Framer Motion', 'Vercel'],
         link: 'https://bijendramishra123.vercel.app',
-        repoUrl: '',
+        repoUrl: 'https://github.com/Bijendramishra123/bijendra-portfolio.git',
         highlights: ['3D rotating cards', 'Smooth animations', 'Responsive design'],
       },
     ],
