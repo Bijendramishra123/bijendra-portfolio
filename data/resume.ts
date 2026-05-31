@@ -53,7 +53,7 @@ export const resumeData = {
       },
       {
         name: 'AI & Machine Learning',
-        skills: ['Machine Learning', 'Deep Learning', 'Vector Search', 'AI Integration'],
+        skills: ['Machine Learning', 'Deep Learning', 'Vector Search', 'LangGraph', 'Groq LLM', 'Scikit-learn', 'ONNX'],
       },
       {
         name: 'Tools & Platforms',
@@ -99,6 +99,36 @@ export const resumeData = {
           'Docker Containerization',
           'Deployed on Render & Vercel',
           'Redux Toolkit for State Management'
+        ],
+      },
+      {
+        title: 'Placement Predictor AI (ML + .NET + React)',
+        description: 'AI-powered placement prediction system that takes CGPA and IQ as input and predicts placement chances using Machine Learning model (Random Forest). ML model trained on Kaggle dataset, converted to ONNX, and deployed with ASP.NET Core Web API.',
+        technologies: ['React', 'TypeScript', 'ASP.NET Core', 'ONNX Runtime', 'Scikit-learn', 'Python', 'Kaggle Dataset'],
+        link: 'https://placement-checker-ai-model-zek2.vercel.app/',
+        repoUrl: 'https://github.com/Bijendramishra123/Placement_checker_AI_Model',
+        highlights: [
+          'ML Model Training (Random Forest)',
+          'ONNX Model Conversion & Deployment',
+          'ASP.NET Core Web API Backend',
+          'React + TypeScript Frontend',
+          'Real-time Placement Prediction',
+          'Kaggle Dataset Integration'
+        ],
+      },
+      {
+        title: 'AI CRM for Healthcare Professionals (HCP)',
+        description: 'AI-powered Customer Relationship Management system for Healthcare Professionals with LangGraph agent integration. Features structured HCP interaction logging and AI-powered chat interface using Groq LLM.',
+        technologies: ['React 18', 'Redux', 'Python FastAPI', 'LangGraph', 'Groq LLM (gemma2-9b-it)', 'SQLite'],
+        link: '#', // TODO: Deploy ke baad URL daal dena
+        repoUrl: 'https://github.com/Bijendramishra123/ai-crm-hcp-langgraph',
+        highlights: [
+          'LangGraph AI Agent Integration',
+          'Groq LLM (gemma2-9b-it) for Chat',
+          '5 LangGraph Tools for Sales Activities',
+          'Structured HCP Interaction Logging',
+          'CRUD Operations',
+          'Responsive Modern UI'
         ],
       },
       {
