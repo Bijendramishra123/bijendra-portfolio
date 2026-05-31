@@ -86,6 +86,22 @@ export const resumeData = {
   projects: {
     title: 'Featured Projects',
     items: [
+      // 🔥 NEW PROJECT - CANTEEN MANAGEMENT SYSTEM (PEHLE NUMBER PE) 🔥
+      {
+        title: 'Canteen Management System (Full Stack + Payment Gateway)',
+        description: 'Complete canteen ordering system with online food ordering, cart management, and Razorpay payment integration. Built with microservices architecture.',
+        technologies: ['React', 'Vite', 'Tailwind CSS', 'Python FastAPI', 'Java Spring Boot', 'MongoDB', 'Razorpay', 'Docker', 'JWT'],
+        link: 'https://canteen-frontend-bay.vercel.app',
+        repoUrl: 'https://github.com/Bijendramishra123/canteen-management-frontend',
+        highlights: [
+          'JWT Authentication & Role Based Access',
+          'Razorpay Payment Gateway Integration',
+          'Microservices Architecture (Python + Java)',
+          'Docker Containerization',
+          'Deployed on Render & Vercel',
+          'Redux Toolkit for State Management'
+        ],
+      },
       {
         title: 'AI Product Search UI',
         description: 'Modern UI for AI-powered product search with intelligent filtering and recommendations.',
