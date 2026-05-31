@@ -86,7 +86,6 @@ export const resumeData = {
   projects: {
     title: 'Featured Projects',
     items: [
-      // 🔥 NEW PROJECT - CANTEEN MANAGEMENT SYSTEM (PEHLE NUMBER PE) 🔥
       {
         title: 'Canteen Management System (Full Stack + Payment Gateway)',
         description: 'Complete canteen ordering system with online food ordering, cart management, and Razorpay payment integration. Built with microservices architecture.',
