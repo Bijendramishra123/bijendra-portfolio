@@ -118,14 +118,6 @@ export const resumeData = {
         highlights: ['Inventory tracking', 'Request management', 'Admin dashboard'],
       },
       {
-        title: 'AI Product Vector Search',
-        description: 'Advanced AI-powered search engine using vector embeddings for semantic product matching.',
-        technologies: ['Python', 'Node.js', 'Vector DB', 'Machine Learning'],
-        link: 'https://ai-product-search-ui.vercel.app',
-        repoUrl: 'https://github.com/Bijendramishra123/ai-product-vector-search.git',
-        highlights: ['Vector embeddings', 'Semantic search', 'ML optimization'],
-      },
-      {
         title: 'Task Management System (Full-Stack)',
         description: 'Comprehensive task management platform with team collaboration, real-time updates, and analytics.',
         technologies: ['React', 'Next.js', 'Node.js', 'PostgreSQL', 'Socket.io'],
