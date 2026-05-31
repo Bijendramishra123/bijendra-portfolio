@@ -46,7 +46,7 @@ export function HomeCard() {
 
   // Dynamic stats based on your data (update these values as needed)
   const stats = [
-    { value: "4+", label: "Years Experience", icon: FaRocket },
+    { value: "0-1", label: "Years Experience", icon: FaRocket },
     { value: "30+", label: "Projects Completed", icon: FaCode },
     { value: "100%", label: "Client Satisfaction", icon: FaHeart },
   ];
