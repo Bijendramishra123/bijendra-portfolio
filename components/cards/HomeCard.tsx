@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { resumeData } from '@/data/resume';
-import { FaArrowRight, FaRocket, FaCode, FaHeart } from 'react-icons/fa';
+import { FaArrowRight, FaRocket, FaCode, FaHeart, FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { usePortfolio } from '@/context/PortfolioContext';
 import { useState, useEffect } from 'react';
 
@@ -44,20 +44,25 @@ export function HomeCard() {
     },
   };
 
-  // Dynamic stats based on your data (update these values as needed)
   const stats = [
-    { value: "0-1", label: "Years Experience", icon: FaRocket },
-    { value: "30+", label: "Projects Completed", icon: FaCode },
-    { value: "100%", label: "Client Satisfaction", icon: FaHeart },
+    { value: "0-1", label: "Years Experience", icon: FaRocket, color: "from-red-400 to-rose-400" },
+    { value: "30+", label: "Projects Completed", icon: FaCode, color: "from-sky-400 to-blue-400" },
+    { value: "100%", label: "Client Satisfaction", icon: FaHeart, color: "from-red-400 to-pink-400" },
+  ];
+
+  const socialLinks = [
+    { icon: FaGithub, url: "https://github.com/Bijendramishra123", label: "GitHub", color: "bg-gray-800" },
+    { icon: FaLinkedin, url: "https://www.linkedin.com/in/bijendra-mishraa-176744279", label: "LinkedIn", color: "bg-blue-600" },
+    { icon: FaEnvelope, url: "mailto:bijendramishra2002@gmail.com", label: "Email", color: "bg-red-500" },
   ];
 
   return (
     <div className="h-full flex flex-col justify-center space-y-6 md:space-y-8 
-      overflow-y-auto px-2 sm:px-4 relative">
+      overflow-y-auto px-2 sm:px-4 relative bg-gradient-to-br from-white via-red-50/30 to-sky-50/30">
       
-      {/* Animated background glow effects */}
+      {/* Animated background glow effects - Light Red & Sky Blue */}
       <motion.div 
-        className="absolute -top-20 -right-20 w-64 h-64 bg-purple-300/20 rounded-full blur-3xl"
+        className="absolute -top-20 -right-20 w-72 h-72 bg-red-200/30 rounded-full blur-3xl"
         animate={{
           x: mousePosition.x * 0.02,
           y: mousePosition.y * 0.02,
@@ -65,12 +70,20 @@ export function HomeCard() {
         transition={{ type: "spring", damping: 50 }}
       />
       <motion.div 
-        className="absolute -bottom-20 -left-20 w-64 h-64 bg-violet-300/20 rounded-full blur-3xl"
+        className="absolute -bottom-20 -left-20 w-72 h-72 bg-sky-200/30 rounded-full blur-3xl"
         animate={{
           x: mousePosition.x * -0.02,
           y: mousePosition.y * -0.02,
         }}
         transition={{ type: "spring", damping: 50 }}
+      />
+      <motion.div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-rose-100/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{ duration: 8, repeat: Infinity }}
       />
 
       {/* Main Content */}
@@ -85,10 +98,10 @@ export function HomeCard() {
           variants={itemVariants}
           className="inline-block mb-4"
         >
-          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 
-            text-purple-700 rounded-full text-sm font-medium border border-purple-200
-            shadow-sm">
-            👋 Welcome to my portfolio
+          <span className="px-5 py-2.5 bg-gradient-to-r from-red-50 to-sky-50 
+            text-red-600 rounded-full text-sm font-medium border border-red-200
+            shadow-sm backdrop-blur-sm">
+            ✨ Welcome to my creative space
           </span>
         </motion.div>
 
@@ -97,8 +110,8 @@ export function HomeCard() {
           variants={itemVariants}
           className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4"
         >
-          <span className="text-gray-900">Hello, I'm </span>
-          <span className="bg-gradient-to-r from-purple-600 via-violet-600 to-purple-600 
+          <span className="text-gray-800">Hello, I'm </span>
+          <span className="bg-gradient-to-r from-red-500 via-rose-500 to-sky-500 
             bg-clip-text text-transparent animate-gradient">
             Bijendra Mishra
           </span>
@@ -110,22 +123,26 @@ export function HomeCard() {
           className="flex items-center gap-3 mb-6"
         >
           <motion.div 
-            className="w-2 h-2 bg-purple-500 rounded-full"
-            animate={{ scale: [1, 1.5, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            className="w-2.5 h-2.5 bg-red-500 rounded-full"
+            animate={{ scale: [1, 1.5, 1], backgroundColor: ['#ef4444', '#0ea5e9', '#ef4444'] }}
+            transition={{ duration: 3, repeat: Infinity }}
           />
-          <p className="text-lg sm:text-xl md:text-2xl text-purple-700 font-medium">
+          <p className="text-lg sm:text-xl md:text-2xl text-red-600 font-semibold">
             {personal.title}
           </p>
         </motion.div>
 
-        {/* Summary */}
-        <motion.p 
-          variants={itemVariants} 
-          className="text-base sm:text-lg text-gray-600 max-w-2xl leading-relaxed mb-8"
+        {/* Summary with gradient border */}
+        <motion.div 
+          variants={itemVariants}
+          className="relative max-w-2xl mb-8"
         >
-          {personal.summary}
-        </motion.p>
+          <div className="absolute inset-0 bg-gradient-to-r from-red-100 to-sky-100 rounded-2xl blur-xl opacity-50" />
+          <p className="relative text-base sm:text-lg text-gray-700 leading-relaxed 
+            bg-white/60 backdrop-blur-sm p-5 rounded-2xl border border-red-100 shadow-sm">
+            {personal.summary}
+          </p>
+        </motion.div>
       </motion.div>
 
       {/* CTA Buttons */}
@@ -139,47 +156,47 @@ export function HomeCard() {
         <motion.button
           onClick={() => goToCard(5)}
           className="group relative inline-flex items-center gap-2 bg-gradient-to-r 
-            from-purple-600 to-violet-600 text-white px-6 py-3 sm:px-8 sm:py-4 
+            from-red-500 to-rose-500 text-white px-7 py-3.5 sm:px-9 sm:py-4 
             rounded-xl font-semibold overflow-hidden shadow-lg hover:shadow-xl
             transition-all duration-300 cursor-pointer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <motion.div 
-            className="absolute inset-0 bg-white/20"
+            className="absolute inset-0 bg-gradient-to-r from-red-600 to-rose-600"
             initial={{ x: '-100%' }}
             whileHover={{ x: 0 }}
             transition={{ duration: 0.3 }}
           />
-          <span className="relative">Get in Touch</span>
+          <span className="relative">Let's Connect</span>
           <FaArrowRight className="w-4 h-4 relative group-hover:translate-x-1 transition-transform" />
         </motion.button>
 
         <motion.button
           onClick={() => goToCard(2)}
-          className="relative inline-flex items-center gap-2 bg-white text-purple-600 
-            px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-semibold border-2 
-            border-purple-600 hover:bg-purple-50 transition-all duration-300 
-            cursor-pointer overflow-hidden"
+          className="relative inline-flex items-center gap-2 bg-white text-red-600 
+            px-7 py-3.5 sm:px-9 sm:py-4 rounded-xl font-semibold border-2 
+            border-red-300 hover:border-red-500 hover:bg-red-50 transition-all duration-300 
+            cursor-pointer overflow-hidden shadow-sm"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <motion.div 
-            className="absolute inset-0 bg-gradient-to-r from-purple-100 to-violet-100"
+            className="absolute inset-0 bg-gradient-to-r from-red-50 to-sky-50"
             initial={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
           />
-          <span className="relative">View My Work</span>
+          <span className="relative">Explore Projects</span>
           <FaRocket className="w-4 h-4 relative" />
         </motion.button>
       </motion.div>
 
-      {/* Stats Section */}
+      {/* Stats Section - Red & Sky Blue Theme */}
       <motion.div
         variants={itemVariants}
-        className="grid grid-cols-3 gap-3 sm:gap-4 pt-6 sm:pt-8 
-          border-t border-purple-200"
+        className="grid grid-cols-3 gap-4 sm:gap-6 pt-6 sm:pt-8 
+          border-t border-red-100"
         initial="hidden"
         animate="visible"
         transition={{ delay: 0.7 }}
@@ -192,28 +209,64 @@ export function HomeCard() {
             transition={{ duration: 0.2 }}
           >
             <div className="flex justify-center mb-2">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br 
-                from-purple-100 to-violet-100 rounded-xl flex items-center 
-                justify-center border border-purple-200 group-hover:border-purple-300
-                transition-colors duration-300">
-                <stat.icon className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
+              <div className={`w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br ${stat.color} 
+                rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg
+                transition-all duration-300 group-hover:scale-110`}>
+                <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
             </div>
             <p className="text-xl sm:text-2xl md:text-3xl font-bold 
-              bg-gradient-to-r from-purple-700 to-violet-700 bg-clip-text text-transparent">
+              bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent">
               {stat.value}
             </p>
-            <p className="text-xs sm:text-sm text-gray-600 mt-1">{stat.label}</p>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1 font-medium">{stat.label}</p>
             
             {/* Glow effect on hover */}
             <motion.div 
-              className="absolute inset-0 -z-10 bg-purple-200/20 rounded-lg blur-xl"
+              className="absolute inset-0 -z-10 bg-gradient-to-r from-red-200/40 to-sky-200/40 rounded-lg blur-xl"
               initial={{ opacity: 0 }}
               whileHover={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             />
           </motion.div>
         ))}
+      </motion.div>
+
+      {/* Social Links Section */}
+      <motion.div
+        variants={itemVariants}
+        className="flex justify-center gap-4 pt-4"
+        initial="hidden"
+        animate="visible"
+        transition={{ delay: 0.8 }}
+      >
+        {socialLinks.map((social, idx) => (
+          <motion.a
+            key={idx}
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${social.color} text-white p-3 rounded-full shadow-md
+              hover:shadow-lg transition-all duration-300 cursor-pointer`}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label={social.label}
+          >
+            <social.icon className="w-5 h-5" />
+          </motion.a>
+        ))}
+      </motion.div>
+
+      {/* Decorative floating elements */}
+      <motion.div
+        className="absolute bottom-10 right-10 w-20 h-20 opacity-30"
+        animate={{
+          y: [0, -10, 0],
+          rotate: [0, 10, 0],
+        }}
+        transition={{ duration: 6, repeat: Infinity }}
+      >
+        <div className="w-full h-full bg-gradient-to-tr from-red-200 to-sky-200 rounded-full blur-2xl" />
       </motion.div>
     </div>
   );
